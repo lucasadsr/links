@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    color: colors.green[900],
+    color: colors.green[300],
     fontSize: 22,
   },
 });
