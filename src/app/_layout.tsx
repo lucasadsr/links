@@ -7,7 +7,7 @@ export default function Layout() {
   const backgroundColor = colors.gray[950];
 
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{ backgroundColor }}>
       <StatusBar style="light" backgroundColor={backgroundColor} />
       <Stack
         screenOptions={{
