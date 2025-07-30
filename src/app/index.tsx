@@ -23,6 +23,7 @@ import { LinkStorage } from "@/@types/link";
 export default function Index() {
   const [category, setCategory] = useState<string>(categories[0].name);
   const [links, setLinks] = useState<LinkStorage[]>([]);
+  const [filteredLinks, setFilteredLinks] = useState<LinkStorage[]>([]);
 
   async function getLinks() {
     try {
@@ -40,6 +41,13 @@ export default function Index() {
     }, [])
   );
 
+  useEffect(() => {
+    if (links.length > 0) {
+      const filtered = links.filter((link) => link.category === category);
+      setFilteredLinks(filtered);
+    }
+  }, [category, links]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -56,7 +64,7 @@ export default function Index() {
       <Categories onChange={setCategory} selected={category} />
 
       <FlatList
-        data={links}
+        data={filteredLinks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Link
