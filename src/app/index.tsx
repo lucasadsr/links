@@ -6,6 +6,7 @@ import {
   Modal,
   Text,
   Alert,
+  Linking,
 } from "react-native";
 import { router, useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -68,6 +69,17 @@ export default function Index() {
       ]);
     } catch (err) {
       Alert.alert("Erro", "Não foi possível excluir o link.");
+      console.error(err);
+    }
+  }
+
+  async function handleOpen() {
+    if (!selectedLink) return;
+
+    try {
+      await Linking.openURL(selectedLink?.url);
+    } catch (err) {
+      Alert.alert("Erro", "Não foi possível abrir o link.");
       console.error(err);
     }
   }
@@ -144,7 +156,7 @@ export default function Index() {
                 variant="secondary"
                 onPress={handleRemove}
               />
-              <Option name="Abrir" icon="language" />
+              <Option name="Abrir" icon="language" onPress={handleOpen} />
             </View>
           </View>
         </View>
