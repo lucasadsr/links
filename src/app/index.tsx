@@ -78,6 +78,7 @@ export default function Index() {
 
     try {
       await Linking.openURL(selectedLink?.url);
+      setShowModal(false);
     } catch (err) {
       Alert.alert("Erro", "Não foi possível abrir o link.");
       console.error(err);
