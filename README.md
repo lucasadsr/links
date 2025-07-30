@@ -10,7 +10,7 @@ O Links Manager é uma aplicação que permite aos usuários salvar, organizar e
 
 Confira o funcionamento do aplicativo no vídeo abaixo:
 
-https://github.com/user-attachments/assets/demo.mp4
+https://github.com/user-attachments/assets/5c30f309-0a19-4577-8696-93c989bc5d87
 
 _Vídeo demonstrativo mostrando as principais funcionalidades do Links Manager_
 
