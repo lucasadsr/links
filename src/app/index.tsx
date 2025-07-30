@@ -5,6 +5,7 @@ import {
   FlatList,
   Modal,
   Text,
+  Alert,
 } from "react-native";
 import { router } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -14,11 +15,28 @@ import { Categories } from "@/components/categories";
 import { Link } from "@/components/link";
 import { Option } from "@/components/option";
 import { styles } from "@/styles/screens";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categories } from "@/utils/categories";
+import { linkStorage } from "@/storage/link-storage";
+import { LinkStorage } from "@/@types/link";
 
 export default function Index() {
   const [category, setCategory] = useState<string>(categories[0].name);
+  const [links, setLinks] = useState<LinkStorage[]>([]);
+
+  async function getLinks() {
+    try {
+      const data = await linkStorage.get();
+      setLinks(data);
+    } catch (err) {
+      Alert.alert("Erro", "Não foi possível carregar os links.");
+      console.error(err);
+    }
+  }
+
+  useEffect(() => {
+    getLinks();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,12 +54,12 @@ export default function Index() {
       <Categories onChange={setCategory} selected={category} />
 
       <FlatList
-        data={["1", "2", "3", "4", "5"]}
-        keyExtractor={(item) => item}
+        data={links}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Link
-            name={`Link ${item}`}
-            url={`https://example.com/${item}`}
+            name={item.name}
+            url={item.url}
             onDetails={() => console.log(`clicou ${item}`)}
           />
         )}

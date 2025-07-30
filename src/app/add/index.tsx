@@ -8,32 +8,46 @@ import { Categories } from "@/components/categories";
 import { Input } from "@/components/input";
 import { Button } from "@/components/button";
 import { useState } from "react";
+import { linkStorage } from "@/storage/link-storage";
 
 export default function Add() {
   const [category, setCategory] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [url, setUrl] = useState<string>("");
 
-  function handleAdd() {
-    if (!category) {
-      return Alert.alert(
-        "Selecione uma categoria",
-        "Por favor, preencha todos os campos obrigatórios."
-      );
+  async function handleAdd() {
+    try {
+      if (!category) {
+        return Alert.alert(
+          "Selecione uma categoria",
+          "Por favor, preencha todos os campos obrigatórios."
+        );
+      }
+      if (!name.trim()) {
+        return Alert.alert(
+          "Preencha o nome",
+          "Por favor, preencha todos os campos obrigatórios."
+        );
+      }
+      if (!url.trim()) {
+        return Alert.alert(
+          "Preencha a URL",
+          "Por favor, preencha todos os campos obrigatórios."
+        );
+      }
+
+      await linkStorage.save({
+        id: String(new Date().getTime()),
+        name,
+        url,
+        category,
+      });
+      const data = await linkStorage.get();
+      console.log(data);
+    } catch (err) {
+      Alert.alert("Erro", "Não foi possível salvar o link.");
+      console.error(err);
     }
-    if (!name.trim()) {
-      return Alert.alert(
-        "Preencha o nome",
-        "Por favor, preencha todos os campos obrigatórios."
-      );
-    }
-    if (!url.trim()) {
-      return Alert.alert(
-        "Preencha a URL",
-        "Por favor, preencha todos os campos obrigatórios."
-      );
-    }
-    console.log({ category, name, url });
   }
 
   return (
