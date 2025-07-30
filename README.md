@@ -6,6 +6,14 @@ Um aplicativo mobile desenvolvido em React Native para organizar e gerenciar seu
 
 O Links Manager é uma aplicação que permite aos usuários salvar, organizar e acessar rapidamente seus links favoritos através de categorias personalizadas. Com uma interface limpa e moderna, o app facilita o gerenciamento de recursos importantes como projetos, sites, vídeos, artigos, cursos e documentos.
 
+## 🎥 Demonstração
+
+Confira o funcionamento do aplicativo no vídeo abaixo:
+
+https://github.com/user-attachments/assets/demo.mp4
+
+_Vídeo demonstrativo mostrando as principais funcionalidades do Links Manager_
+
 ## 🚀 Funcionalidades
 
 - ✅ **Adicionar Links**: Salve seus links favoritos com nome, URL e categoria
