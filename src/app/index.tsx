@@ -7,7 +7,7 @@ import {
   Text,
   Alert,
 } from "react-native";
-import { router } from "expo-router";
+import { router, useFocusEffect } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { MaterialIcons } from "@expo/vector-icons";
 import { colors } from "@/styles/colors";
@@ -15,7 +15,7 @@ import { Categories } from "@/components/categories";
 import { Link } from "@/components/link";
 import { Option } from "@/components/option";
 import { styles } from "@/styles/screens";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { categories } from "@/utils/categories";
 import { linkStorage } from "@/storage/link-storage";
 import { LinkStorage } from "@/@types/link";
@@ -34,9 +34,11 @@ export default function Index() {
     }
   }
 
-  useEffect(() => {
-    getLinks();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getLinks();
+    }, [])
+  );
 
   return (
     <SafeAreaView style={styles.container}>

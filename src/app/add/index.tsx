@@ -42,8 +42,7 @@ export default function Add() {
         url,
         category,
       });
-      const data = await linkStorage.get();
-      console.log(data);
+      router.back();
     } catch (err) {
       Alert.alert("Erro", "Não foi possível salvar o link.");
       console.error(err);
