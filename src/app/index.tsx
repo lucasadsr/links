@@ -24,6 +24,8 @@ export default function Index() {
   const [category, setCategory] = useState<string>(categories[0].name);
   const [links, setLinks] = useState<LinkStorage[]>([]);
   const [filteredLinks, setFilteredLinks] = useState<LinkStorage[]>([]);
+  const [showModal, setShowModal] = useState<boolean>(false);
+  const [selectedLink, setSelectedLink] = useState<LinkStorage | null>(null);
 
   async function getLinks() {
     try {
@@ -33,6 +35,11 @@ export default function Index() {
       Alert.alert("Erro", "Não foi possível carregar os links.");
       console.error(err);
     }
+  }
+
+  function handleDetails(link: LinkStorage) {
+    setSelectedLink(link);
+    setShowModal(true);
   }
 
   useFocusEffect(
@@ -70,7 +77,7 @@ export default function Index() {
           <Link
             name={item.name}
             url={item.url}
-            onDetails={() => console.log(`clicou ${item}`)}
+            onDetails={() => handleDetails(item)}
           />
         )}
         style={styles.links}
@@ -78,13 +85,16 @@ export default function Index() {
         showsVerticalScrollIndicator={false}
       />
 
-      <Modal transparent visible={false} animationType="slide">
+      <Modal transparent visible={showModal} animationType="slide">
         <View style={styles.modal}>
           <View style={styles.modalContent}>
             <View style={styles.modalHeader}>
               <Text style={styles.modalCategory}>Link</Text>
 
-              <TouchableOpacity activeOpacity={0.7}>
+              <TouchableOpacity
+                activeOpacity={0.7}
+                onPress={() => setShowModal(false)}
+              >
                 <MaterialIcons
                   name="close"
                   size={20}
@@ -93,9 +103,9 @@ export default function Index() {
               </TouchableOpacity>
             </View>
 
-            <Text style={styles.modalLinkName}>Rocketseat</Text>
+            <Text style={styles.modalLinkName}>{selectedLink?.name}</Text>
 
-            <Text style={styles.modalUrl}>http://rocketseat.com.br</Text>
+            <Text style={styles.modalUrl}>{selectedLink?.url}</Text>
 
             <View style={styles.modalFooter}>
               <Option name="Excluir" icon="delete" variant="secondary" />
